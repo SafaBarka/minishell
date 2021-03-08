@@ -39,7 +39,7 @@ typedef struct s_v{
 }t_v;
 
 typedef	struct		s_list{
-	int			i;
+	void			*element;
 	struct s_list	*next;
 }					t_list;
 
