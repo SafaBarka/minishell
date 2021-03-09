@@ -36,3 +36,5 @@ typedef struct s_semicolon{
 
 char	*ft_strdup(const char *s1);
 char *ft_create_mask(char *s, int len);
+int ft_split_semicolon(char *s , char *mask , int len);
+void ft_write(char *s);
