@@ -1,11 +1,13 @@
 #include "../header.h"
 
-void ft_initialize()
+int ft_initialize()
 {
-    v = malloc(sizeof(t_v));
+    if(!(v = malloc(sizeof(t_var))))
+        return 0;
     v->p_backslash = NULL;
-    v->p_sq= NULL;
-    v->p_dollar= NULL;
-    v->p_semicolon=NULL;
+    v->p_dollar = NULL;
     v->p_dq = NULL;
+    v->p_sq = NULL;
+    v->p_semicolon = NULL;
+    return 1;
 }
