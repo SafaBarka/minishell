@@ -1,7 +1,7 @@
 #include "../header.h"
 
 
-char *ft_store_printable(char *s, int len){
+char *ft_create_mask(char *s, int len){
     int dq = -1;
     int sq = -1;
     int i = 0;
@@ -9,6 +9,8 @@ char *ft_store_printable(char *s, int len){
 
     
     char *mask = ft_strdup(s);
+    if(mask == NULL)
+        return NULL;
     while (i < len)
     {
         if(s[i] == 34 && dq == -1 && sq == -1 )
