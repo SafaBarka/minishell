@@ -115,6 +115,8 @@ char *ft_store_printable(char *s, int len){
                     mask[i] ='$' ;
                 else if (s[i] == ' ')
                     mask[i] ='S';
+                else if (s[i] == '|')
+                    mask[i] ='|';
                 else
                     mask[i] = 'P';
              }

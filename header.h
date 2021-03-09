@@ -19,6 +19,14 @@ typedef struct s_var{
 }t_var;
 
 
+// typedef struct s_redirection{
+//     char *split_
+// }t_redirection;
+// typedef struct s_split{
+//     char *split_semicolon;
+
+// }t_element;
+
 t_var *v ;
 
 int ft_initialize();
