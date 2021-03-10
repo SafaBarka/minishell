@@ -5,6 +5,17 @@ void ft_write(char *s)
     write(1, s, ft_strlen(s));
 }
 
+void ft_print_split(char **s)
+{
+    int i = 0;
+    while (s && s[i])
+    {
+        ft_write("|");
+        ft_write(s[i]);
+        ft_write("|\n");
+        i++;
+    }
+}
 
 int main(){
     ft_write("\e[1;31m***********************\e[0m\n");
@@ -22,9 +33,10 @@ int main(){
         char *mask = ft_create_mask(line, len);
         if (mask == NULL)
          return 0; 
-        // ft_split_semicolon(line, mask, len);
-          printf("|%s|\n",line);
-         printf("|%s|\n",mask);
+        char **split = ft_split_semicolon(line, mask, len);
+        //  printf("|%s|\n",line);
+        // printf("|%s|\n",mask);
+        ft_print_split(split);
         free(line); 
         free(mask);
         line = NULL;
