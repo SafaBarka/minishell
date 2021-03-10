@@ -1,16 +1,16 @@
 #include "../header.h"
 
-void ft_store_split_semicolon(char *s, char *mask)
+void ft_store_split(t_split **head, char *s, char *mask)
 {
-   
-    if(!v->semicolon)
-        v->semicolon = ft_lstnew(s, mask);
+  // printf("|%s|\n",s);
+    if(!(*head))
+        *head = ft_lstnew(s, mask);
     else
-        ft_lstadd_back(&v->semicolon, ft_lstnew(s, mask));
+        ft_lstadd_back(head, ft_lstnew(s, mask));
     
 }
 
-t_semicolon	*ft_lstlast(t_semicolon *lst)
+t_split	*ft_lstlast(t_split *lst)
 {
 	if (lst != NULL)
 	{
@@ -22,22 +22,22 @@ t_semicolon	*ft_lstlast(t_semicolon *lst)
 	return (lst);
 }
 
-t_semicolon	*ft_lstnew(char *split_semicolon, char *mask_semicolon)
+t_split	*ft_lstnew(char *split_semicolon, char *mask_semicolon)
 {
-	t_semicolon *element;
+	t_split *element;
 
-	if (!(element = (t_semicolon *)malloc(sizeof(t_semicolon))))
+	if (!(element = (t_split *)malloc(sizeof(t_split))))
 		return (NULL);
-    element->split_semicolon = split_semicolon;
-    element->mask_semicolon = mask_semicolon;
-    element->pipes = NULL;
+    element->command = split_semicolon;
+    element->mask = mask_semicolon;
+    element->split = NULL;
 	element->next = NULL;
 	return (element);
 }
 
-void	ft_lstadd_back(t_semicolon **alst, t_semicolon *new)
+void	ft_lstadd_back(t_split **alst, t_split *new)
 {
-	t_semicolon *lst;
+	t_split *lst;
 	if (*alst == NULL)
 		*alst = new;
 	else if (*alst && new)
@@ -49,17 +49,38 @@ void	ft_lstadd_back(t_semicolon **alst, t_semicolon *new)
 
 
 
-void ft_print(t_semicolon *head)
+void ft_print(t_split *head)
 {
-	t_semicolon *current;
-	current = head;
+	t_split *semicolon;
+	t_split *pipe;
+	t_split *space;
 
-	while(current){
-       // printf("in\n");
-        printf("|%s|\n",current->split_semicolon);
-        printf("|%s|\n",current->mask_semicolon);
-        printf("\n***********************\n");
-		//printf(" c= |%c| - i = |%d|\n",current->c, current->i);
-		current = current->next;
+	semicolon = head;
+
+	while(semicolon){
+		ft_write("\e[1;31m{\e[0m\n");
+        printf("\t\e[1;31m|%s|\e[0m\n",semicolon->command);
+        printf("\t\e[1;31m|%s|\e[0m\n",semicolon->mask);
+		
+		 pipe = semicolon->split;
+		 while(pipe)
+		{
+			ft_write("\t\e[1;32m{\e[0m\n");
+			printf("\t\t\e[1;32m|%s|\e[0m\n",pipe->command);
+        	printf("\t\t\e[1;32m|%s|\e[0m\n",pipe->mask);
+			space = pipe->split;
+			while(space)
+			{
+				ft_write("\t\t\e[1;34m{\e[0m\n");
+				printf("\t\t\t\e[1;34m|%s|\e[0m\n",space->command);
+        		printf("\t\t\t\e[1;34m|%s|\e[0m\n",space->mask);
+				space = space->next;
+				ft_write("\t\t\e[1;34m}\e[0m\n");
+			}
+		 	pipe = pipe->next;
+			ft_write("\t\e[1;32m}\e[0m\n");
+		 }
+		semicolon = semicolon->next;
+		ft_write("\e[1;31m}\e[0m\n");
 	}
 }

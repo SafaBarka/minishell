@@ -72,7 +72,7 @@ int ft_check_closed_quotes(char *mask, int len){
     return 1;
 }
 
-int ft_nbr_words_semicolon(char *mask, int len)
+int ft_nbr_words(char *mask, int len,char c)
 {
     int i = 0;
     int count = 0;
@@ -83,7 +83,7 @@ int ft_nbr_words_semicolon(char *mask, int len)
     i++;
     while (i < len)
     {
-        if(mask[i] == ';' && i + 1 < len && mask[i+1] != ';')
+        if(mask[i] == c && i + 1 < len && mask[i+1] != c)
             count++;
         i++;
     }
@@ -106,8 +106,15 @@ static char		**result(int i, int cw, char **str)
 		str[i] = NULL;
 	return (str);
 }
-int ft_split_semicolon(char *s , char *mask , int len )
+int ft_split(t_split **head, char *s , char *mask , int len ,char c)
 {
+    // if (c == '|')
+    // {
+    //     printf("|%s|\n",s);
+    //     printf("|%s|\n",mask);
+
+    // }
+    
     int cw;
     char **str;
     int start = 0;
@@ -119,24 +126,25 @@ int ft_split_semicolon(char *s , char *mask , int len )
         return -1;
     if(ft_check_closed_quotes(mask,len) == -1)
         return -1;
-    cw = ft_nbr_words_semicolon(mask, len);
+    cw = ft_nbr_words(mask, len,c);
 
     if (!(str = malloc(sizeof(char *) * (cw +1))))
         return -1;
      while (((char *)mask)[end] && i != cw)
 	 {
         
-        while (((char *)mask)[end] && ((char *)mask)[end] == ';')
+        while (((char *)mask)[end] && ((char *)mask)[end] == c)
 			end++;
 		start = end;
 		end++;
-		while (((char *)mask)[end] && ((char *)mask)[end] != ';')
+		while (((char *)mask)[end] && ((char *)mask)[end] != c)
 			end++;
 		if (i < cw)
         {
-                 a = ft_substr(s, start, (end - 1) - start + 1);
-                 m = ft_substr(mask, start, (end - 1) - start + 1);
-                 ft_store_split_semicolon(a,m);
+             
+                    a = ft_substr(s, start, (end - 1) - start + 1);
+                    m = ft_substr(mask, start, (end - 1) - start + 1);
+                    ft_store_split(head,a,m);
                 i++;
         }
 	 }
