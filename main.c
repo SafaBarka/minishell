@@ -18,6 +18,9 @@ void ft_print_split(char **s)
 }
 
 int main(){
+
+    v = malloc(sizeof(t_var));
+    v->semicolon = NULL;
     ft_write("\e[1;31m***********************\e[0m\n");
     ft_write("\e[1;31m         SHELL         \e[0m\n");
     ft_write("\e[1;31m***********************\e[0m\n\n\n");   
@@ -31,12 +34,13 @@ int main(){
         get_next_line(0, &line);
         len = ft_strlen(line);
         char *mask = ft_create_mask(line, len);
-        if (mask == NULL)
-         return 0; 
-        char **split = ft_split_semicolon(line, mask, len);
-        //  printf("|%s|\n",line);
-        // printf("|%s|\n",mask);
-        ft_print_split(split);
+        printf("|%s|\n",line);
+        printf("|%s|\n",mask);
+        ft_split_semicolon(line, mask, len);
+        //ft_print(v->semicolon);
+        //ft_store_split_semicolon("hello","pppp");
+        //ft_store_split_semicolon("best","pppp");
+        ft_print(v->semicolon);
         free(line); 
         free(mask);
         line = NULL;

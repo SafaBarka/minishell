@@ -106,25 +106,26 @@ static char		**result(int i, int cw, char **str)
 		str[i] = NULL;
 	return (str);
 }
-char **ft_split_semicolon(char *s , char *mask , int len)
+int ft_split_semicolon(char *s , char *mask , int len )
 {
     int cw;
     char **str;
     int start = 0;
     int end = 0;
     int i = 0;
-
-    if (s == NULL)
-        return NULL;
+    char *a;
+    char *m;
     if(ft_check_semicolon_error(mask,len) == -1)
-        return NULL;
+        return -1;
     if(ft_check_closed_quotes(mask,len) == -1)
-        return NULL;
+        return -1;
     cw = ft_nbr_words_semicolon(mask, len);
+
     if (!(str = malloc(sizeof(char *) * (cw +1))))
-        return NULL;
-    while (((char *)mask)[end] && i != cw)
-	{
+        return -1;
+     while (((char *)mask)[end] && i != cw)
+	 {
+        
         while (((char *)mask)[end] && ((char *)mask)[end] == ';')
 			end++;
 		start = end;
@@ -132,9 +133,12 @@ char **ft_split_semicolon(char *s , char *mask , int len)
 		while (((char *)mask)[end] && ((char *)mask)[end] != ';')
 			end++;
 		if (i < cw)
-			if (!(str[i++] = ft_substr(s, start, (end - 1) - start + 1)))
-				return (free_tab(i, str));
-	}
-	return (result(i, cw, str));
-   return NULL;
+        {
+                 a = ft_substr(s, start, (end - 1) - start + 1);
+                 m = ft_substr(mask, start, (end - 1) - start + 1);
+                 ft_store_split_semicolon(a,m);
+                i++;
+        }
+	 }
+  return 1;
 }
