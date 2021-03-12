@@ -108,13 +108,7 @@ static char		**result(int i, int cw, char **str)
 }
 int ft_split(t_split **head, char *s , char *mask , int len ,char c)
 {
-    // if (c == '|')
-    // {
-    //     printf("|%s|\n",s);
-    //     printf("|%s|\n",mask);
 
-    // }
-    
     int cw;
     char **str;
     int start = 0;
@@ -144,7 +138,8 @@ int ft_split(t_split **head, char *s , char *mask , int len ,char c)
              
                     a = ft_substr(s, start, (end - 1) - start + 1);
                     m = ft_substr(mask, start, (end - 1) - start + 1);
-                    ft_store_split(head,a,m);
+                    
+                    ft_store_split(head,ft_strtrim(a," "),ft_strtrim(m,"S"));
                 i++;
         }
 	 }

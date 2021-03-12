@@ -58,3 +58,5 @@ void ft_store_split(t_split **head, char *s, char *mask);
 t_split	*ft_lstlast(t_split *lst);
 t_split	*ft_lstnew(char *split_semicolon, char *mask_semicolon);
 void	ft_lstadd_back(t_split **alst, t_split *new);
+char *ft_dollar(char *old_mask, char *line, int len);
+char			*ft_strtrim(char  *s1, char  *set);

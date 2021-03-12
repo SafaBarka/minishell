@@ -36,23 +36,21 @@ int main(){
         get_next_line(0, &line);
         len = ft_strlen(line);
         char *mask = ft_create_mask(line, len);
-        ft_split(&v->semicolon, line, mask, len,';');
+
+        char *new_mask = ft_dollar(mask,line, len);
+        ft_split(&v->semicolon, line, new_mask, len,';');
        
-        //ft_print(v->semicolon);
-        //ft_store_split_semicolon("hello","pppp");
-        //ft_store_split_semicolon("best","pppp");
         semicolon = v->semicolon;
         while (semicolon)
         {
             ft_split(&semicolon->split, semicolon->command, semicolon->mask, ft_strlen(semicolon->command),'|');
-            pipe = semicolon->split;
+             pipe = semicolon->split;
             while (pipe){
                 ft_split(&pipe->split, pipe->command, pipe->mask, ft_strlen(pipe->command),'S');
                 pipe = pipe->next;
             }
             semicolon = semicolon->next;
         }
-
         ft_print(v->semicolon);
         free(line); 
         free(mask);
