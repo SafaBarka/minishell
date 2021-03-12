@@ -40,11 +40,12 @@ int main(){
         char *new_mask = ft_dollar(mask,line, len);
         ft_split(&v->semicolon, line, new_mask, len,';');
        
+        
         semicolon = v->semicolon;
         while (semicolon)
         {
             ft_split(&semicolon->split, semicolon->command, semicolon->mask, ft_strlen(semicolon->command),'|');
-             pipe = semicolon->split;
+            pipe = semicolon->split;
             while (pipe){
                 ft_split(&pipe->split, pipe->command, pipe->mask, ft_strlen(pipe->command),'S');
                 pipe = pipe->next;
@@ -52,6 +53,7 @@ int main(){
             semicolon = semicolon->next;
         }
         ft_print(v->semicolon);
+        ft_check_command(&v->semicolon);
         free(line); 
         free(mask);
         line = NULL;
