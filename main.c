@@ -27,37 +27,23 @@ int main(){
 
     char *line = NULL;
     int len = 0;
-    t_split *semicolon;
-    t_split *pipe;
     while(1)
     {
         ft_write("\e[1;32mSHELL-$ \e[0m");
-        
-        get_next_line(0, &line);
-        len = ft_strlen(line);
-        char *mask = ft_create_mask(line, len);
-
-        char *new_mask = ft_dollar(mask,line, len);
-        ft_split(&v->semicolon, line, new_mask, len,';');
-       
-        
-        semicolon = v->semicolon;
-        while (semicolon)
+        if (get_next_line(0, &line) == -1)
         {
-            ft_split(&semicolon->split, semicolon->command, semicolon->mask, ft_strlen(semicolon->command),'|');
-            pipe = semicolon->split;
-            while (pipe){
-                ft_split(&pipe->split, pipe->command, pipe->mask, ft_strlen(pipe->command),'S');
-                pipe = pipe->next;
-            }
-            semicolon = semicolon->next;
+            ft_write("something wrong happened\n");
+            return -1;
         }
+        len = ft_strlen(line);
+        if (len == 0)
+            continue;
+        ft_store_list(&v->semicolon, line,ft_create_mask(line, len), len);
         ft_print(v->semicolon);
-        ft_check_command(&v->semicolon);
         free(line); 
-        free(mask);
         line = NULL;
-        mask = NULL;
+
+        //need to free list 
         v->semicolon = NULL;
         continue;
     }

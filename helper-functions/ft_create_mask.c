@@ -123,7 +123,8 @@ char *ft_create_mask(char *s, int len){
                     mask[i] = 'P';
              }
     }
-i++;
+    i++;
+    mask = ft_dollar(mask, s, len);
 }
 return mask;
 }

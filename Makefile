@@ -8,8 +8,8 @@ $(NAME):
 		helper-functions/ft_list.c\
 		helper-functions/ft_dollar.c\
 		helper-functions/ft_strtrim.c\
+		helper-functions/ft_store_list.c\
 		helper-functions/ft_create_mask.c\
-		helper-functions/ft_check_command.c\
 		helper-functions/ft_split.c\
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c\

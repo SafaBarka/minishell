@@ -60,4 +60,4 @@ t_split	*ft_lstnew(char *split_semicolon, char *mask_semicolon);
 void	ft_lstadd_back(t_split **alst, t_split *new);
 char *ft_dollar(char *old_mask, char *line, int len);
 char			*ft_strtrim(char  *s1, char  *set);
-void ft_check_command(t_split **head);
+int ft_store_list(t_split **head, char *line, char *mask , int len);

@@ -135,17 +135,10 @@ int ft_split(t_split **head, char *s , char *mask , int len ,char c)
 			end++;
 		if (i < cw)
         {
-                    if(start == 0 && end == len && c !=';')
-                    {
-                        a = ft_strdup("");
-                        m = ft_strdup("");
-                    }
-                    else
-                    {
-                        a = ft_substr(s, start, (end - 1) - start + 1);
-                        m = ft_substr(mask, start, (end - 1) - start + 1);
-                        ft_store_split(head,ft_strtrim(a," "),ft_strtrim(m,"S"));
-                    }
+        
+                    a = ft_substr(s, start, (end - 1) - start + 1);
+                    m = ft_substr(mask, start, (end - 1) - start + 1);
+                    ft_store_split(head,ft_strtrim(a," "),ft_strtrim(m,"S"));
                     
                 i++;
         }
