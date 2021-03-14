@@ -5,6 +5,8 @@ CFLAGS =  -Wall -Wextra -Werror
 $(NAME):
 		@gcc  -fsanitize=address main.c \
 		helper-functions/ft_strdup.c\
+		helper-functions/ft_find_path.c\
+		helper-functions/ft_strncmp.c\
 		helper-functions/ft_list.c\
 		helper-functions/ft_dollar.c\
 		helper-functions/ft_strtrim.c\
