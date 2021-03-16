@@ -17,7 +17,30 @@ void ft_print_split(char **s)
     }
 }
 
+ int ft_calc_args(t_split *split){
+     int i = 0 ;
+     while(split)
+     {
+         i++;
+         split = split->next;
+     }
+     return i;
+ }
 
+ void ft_print_args(char **args)
+ {
+     int i = 0;
+     while (args[i])
+     {
+         printf("|%s|\n",args[i]);
+         i++;
+     }
+ }
+
+ void ft_call(char **args)
+ {
+        execve(args[0],args,NULL);
+ }
 int main(int argc , char *argv[] , char *envp[]){
 
     v = malloc(sizeof(t_var));
@@ -42,34 +65,49 @@ int main(int argc , char *argv[] , char *envp[]){
         ft_store_list(&v->semicolon, line,ft_create_mask(line, len), len);
 
        
-       
-        //ft_print(v->semicolon);
-
-
-
-        // t_split *current_semicolon = v->semicolon;
-        // t_split *current_pipe;
-        // int nbr_semicolon = 0;
-        // while (current_semicolon)
-        // {
-        //     int nbr_pipe = 0;
-        //     current_pipe = current_semicolon->split;
-        //     while (current_pipe && current_pipe->pipe != 0)
-        //     {
-        //         nbr_pipe++;
-        //         current_pipe = current_pipe->next;
-        //     }
-        //     current_semicolon->pipe =  nbr_pipe;
-        //     nbr_semicolon++;
-        //     current_semicolon = current_semicolon->next;
-        // }
- 
-
+        t_split *semicolon = v->semicolon;
+        t_split *pipe ;
+        t_split *space;
+        int nbr = 0;
+        char **args;
+        int i = 0;
+        char *path;
+        int id = -1 ;
+        while (semicolon)
+        {
+                pipe  = semicolon->split;
+                while (pipe)
+                {
+                   
+                        i = 0;
+                        space = pipe->split;
+                        nbr = ft_calc_args(space);
+                        args = malloc(sizeof(char *) * (nbr +1));
+                        while (space)
+                        {
+                            args[i] = space->command;
+                            i++;
+                            space = space->next;
+                        }
+                        id = fork();
+                        if (id == 0)
+                        {
+                            args[i] = NULL;
+                            path = ft_call_executable(ft_strj("/",args[0]),ft_find_path(envp));
+                            args[0] = path;
+                            ft_call(args);
+                        }
+                        if (id != 0)
+                            wait(NULL);
+                        pipe = pipe->next;
+                }
+             semicolon = semicolon->next;
+        }
+        
         free(line); 
         line = NULL;
-        //need to free list 
         v->semicolon = NULL;
         continue;
     }
-}
+    }
 

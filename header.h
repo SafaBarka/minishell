@@ -37,5 +37,8 @@ char *ft_strtrim(char  *s1, char  *set);
 int ft_store_list(t_split **head, char *line, char *mask , int len);
 char			**ft_split_path(char *s, char c);
 
-char *ft_find_path(char *envp[]);
+char **ft_find_path(char *envp[]);
 int		ft_strncmp(char *s1,char *s2, size_t n);
+char			**ft_split_path(char *s, char c);
+char *ft_call_executable(char *command_name,char **split_path);
+char	*ft_strj(char  *s1, char  *s2);
