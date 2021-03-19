@@ -39,7 +39,17 @@ void ft_print_split(char **s)
 
  void ft_call(char **args)
  {
+     int i = 0;
+     while (args[i])
+     {
+         printf("args %d = %s\n",i,args[i]);
+         i++;
+     }
+     int id = fork();
+     if (id == 0)
         execve(args[0],args,NULL);
+    else
+        wait(NULL);
  }
 int main(int argc , char *argv[] , char *envp[]){
 
@@ -51,6 +61,7 @@ int main(int argc , char *argv[] , char *envp[]){
 
     char *line = NULL;
     int len = 0;
+
     while(1)
     {
         ft_write("\e[1;32mSHELL-$ \e[0m");
@@ -63,51 +74,50 @@ int main(int argc , char *argv[] , char *envp[]){
         if (len == 0)
             continue;
         ft_store_list(&v->semicolon, line,ft_create_mask(line, len), len);
+        ft_print(v->semicolon);
 
-       
         t_split *semicolon = v->semicolon;
         t_split *pipe ;
         t_split *space;
+
         int nbr = 0;
         char **args;
         int i = 0;
         char *path;
         int id = -1 ;
+
         while (semicolon)
         {
                 pipe  = semicolon->split;
                 while (pipe)
                 {
-                   
-                        i = 0;
-                        space = pipe->split;
-                        nbr = ft_calc_args(space);
-                        args = malloc(sizeof(char *) * (nbr +1));
-                        while (space)
-                        {
-                            args[i] = space->command;
-                            i++;
-                            space = space->next;
-                        }
-                        id = fork();
-                        if (id == 0)
-                        {
-                            args[i] = NULL;
-                            path = ft_call_executable(ft_strj("/",args[0]),ft_find_path(envp));
-                            args[0] = path;
-                            ft_call(args);
-                        }
-                        if (id != 0)
-                            wait(NULL);
-                        pipe = pipe->next;
+                    i = 0;
+                    space = pipe->split;
+                    nbr = ft_calc_args(space);
+                    printf("nbr + 1 =%d\n",nbr +1);
+                    args = malloc(sizeof(char *) * (nbr +1));
+                    while (space)
+                    {
+                        args[i] = space->command;
+                        i++;
+                        space = space->next;
+                    }
+    
+                        args[i] = NULL;
+                        path = ft_call_executable(ft_strj("/",args[0]),ft_find_path(envp));
+                        args[0] = path;
+                        ft_call(args);
+                    pipe = pipe->next;
                 }
              semicolon = semicolon->next;
         }
+      //  char args[] ={"/bin/echo","\\",NULL};
+       // execve(args[0] ,args, NULL);
         
         free(line); 
         line = NULL;
         v->semicolon = NULL;
         continue;
     }
-    }
-
+    
+}
