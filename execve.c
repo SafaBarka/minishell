@@ -135,7 +135,7 @@ int ft_print_split(char **split)
         return -1;
     while(split[i])
     {   
-            printf("path %d = %s\n",i,split[i]);
+           // printf("path %d = %s\n",i,split[i]);
             i++;
     }
     return 1;
@@ -174,13 +174,13 @@ int main(int argc, char *argv[] , char *envp[])
    {
 	   if(stat(ft_strj(split[i] , s),&stats) == 0)
 	   {
-		   printf("path = |%s|\n",ft_strj(split[i] , s));
-		    printf("\nFile access: ");
+		 //  printf("path = |%s|\n",ft_strj(split[i] , s));
+		 //   printf("\nFile access: ");
     
     		if (stats.st_mode & X_OK)
-        		printf("execute");
+        		ft_write("execute");
 			else 
-				printf("Permisison denied\n");
+				ft_write("Permisison denied\n");
 			break;
 	   }
 	   i++;
@@ -189,5 +189,5 @@ int main(int argc, char *argv[] , char *envp[])
 		printf("command not found\n");
 
    int fd = open("/usr/bin/name",O_RDONLY);
-   printf("fd = |%d|\n",fd);
+  // printf("fd = |%d|\n",fd);
 }
