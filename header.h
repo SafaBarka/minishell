@@ -42,4 +42,8 @@ int		ft_strncmp(char *s1,char *s2, size_t n);
 char			**ft_split_path(char *s, char c);
 char *ft_call_executable(char *command_name,char **split_path);
 char	*ft_strj(char  *s1, char  *s2);
-
+void ft_exec(t_split *v, char *envp[]);
+void ft_exec_pipe(t_split *pipe, char **envp);
+int ft_calc_args(t_split *split);
+void ft_exec_no_pipe(t_split *pi, char **envp);
+void ft_call(char **args);

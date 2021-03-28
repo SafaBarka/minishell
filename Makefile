@@ -15,6 +15,8 @@ $(NAME):
 		helper-functions/ft_split.c\
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c\
+		helper-functions/ft_exec.c\
+		helper-functions/ft_exec_pipe.c\
 		-D BUFFER_SIZE=60 -o $(NAME) 
 
 all : $(NAME)

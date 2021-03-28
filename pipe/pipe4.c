@@ -23,9 +23,9 @@ void    loop_pipe(char ***cmd)
       pipe(p);
     
       if ((pid = fork()) == -1)
-        {
-          exit(EXIT_FAILURE);
-        }
+      {
+        exit(EXIT_FAILURE);
+      }
       else if (pid == 0)
         {
           dup2(p[0], 0); //change the input according to the old one 
