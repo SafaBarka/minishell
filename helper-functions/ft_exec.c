@@ -39,6 +39,7 @@ void ft_exec(t_split *v, char *envp[])
             if(pipe->pipe == 1)
             {
                 ft_exec_pipe(pipe,envp);
+                
                 break;
             }
             else if (pipe->pipe == 0)
@@ -46,6 +47,7 @@ void ft_exec(t_split *v, char *envp[])
             pipe = pipe->next;
            
         }
+        
         semicolon = semicolon->next;
     }
 }

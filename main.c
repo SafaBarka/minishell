@@ -28,6 +28,7 @@ int main(int argc , char *argv[] , char *envp[]){
         if(len == 0)
             continue;
         ft_store_list(&v->semicolon, line,ft_create_mask(line, len), len);
+       // ft_print(v->semicolon);
         ft_exec(v->semicolon,envp);
         free(line); 
         line = NULL;
