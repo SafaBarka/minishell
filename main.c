@@ -1,38 +1,42 @@
 #include "header.h"
 
-void ft_write(char *s)
+int main(int argc , char *argv[] , char *envp[])
 {
-    write(1, s, ft_strlen(s));
-}
-
-int main(int argc , char *argv[] , char *envp[]){
-
-    v = malloc(sizeof(t_var));
-    v->semicolon = NULL;
+    char *line;
+    int len ;
+    char *mask;
+    list = NULL;
+    t_split *list;
     ft_write("\e[1;31m***********************\e[0m\n");
     ft_write("\e[1;31m         SHELL         \e[0m\n");
-    ft_write("\e[1;31m***********************\e[0m\n\n\n");   
+    ft_write("\e[1;31m***********************\e[0m\n\n\n"); 
 
-    char *line = NULL;
-    int len = 0;
 
+    line = NULL;
     while(1)
     {
         ft_write("\e[1;32mSHELL-$ \e[0m");
         if (get_next_line(0, &line) == -1)
-        {
-            ft_write("something wrong happened\n");
-            return -1;
-        }
+            return 0;
         len = ft_strlen(line);
-        if(len == 0)
+        if (len == 0)
             continue;
-        ft_store_list(&v->semicolon, line,ft_create_mask(line, len), len);
-       // ft_print(v->semicolon);
-        ft_exec(v->semicolon,envp);
-        free(line); 
+        //create the mask for line
+        if(!(mask = ft_create_mask(line, len)))
+            return 0;
+        if (!ft_check_errors(mask, len))
+            return 0;
+        if (!ft_split(&list,line, mask,len, ';'))
+            return 0;
+        if(!ft_store(&list , line , mask , len))
+            return 0;
+        free(line);
         line = NULL;
-        v->semicolon = NULL;
-    }
 
+        //after storing data in  list  ; time to execute commands
+        
+        //need to free list
+       // ft_free_list(&list);
+        list = NULL;
+    }
 }

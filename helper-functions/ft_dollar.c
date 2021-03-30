@@ -14,9 +14,12 @@ int ft_include(char *s,int len , char c)
 
 char *ft_dollar(char *old_mask, char *line, int len)
 {
-    char *no_var = " '\")%,;./>\\^+:<=]";
-    int i = 0;
-    char *new_mask = ft_strdup(old_mask);
+    char *no_var;
+    int i;
+   
+    no_var = " '\")%,;./>\\^+:<=]";
+    i = 0;
+
     while (i < len)
     {
         if(old_mask[i] == 36)
