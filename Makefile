@@ -15,6 +15,14 @@ $(NAME):
 		helper-functions/ft_store_list.c\
 		helper-functions/ft_strtrim.c\
 		helper-functions/ft_store.c\
+		helper-functions/ft_exec.c\
+		helper-functions/ft_path.c\
+		helper-functions/ft_call_executable.c\
+		helper-functions/ft_exec_pipe.c\
+		helper-functions/ft_split_path.c\
+		helper-functions/ft_join.c\
+		helper-functions/ft_strncmp.c\
+		helper-functions/ft_exec_no_pipe.c\
 		-D BUFFER_SIZE=60 -o $(NAME) 
 
 all : $(NAME)

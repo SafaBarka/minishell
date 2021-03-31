@@ -7,12 +7,16 @@ int main(int argc , char *argv[] , char *envp[])
     char *mask;
     list = NULL;
     t_split *list;
+    char **path;
     ft_write("\e[1;31m***********************\e[0m\n");
     ft_write("\e[1;31m         SHELL         \e[0m\n");
     ft_write("\e[1;31m***********************\e[0m\n\n\n"); 
 
 
     line = NULL;
+    // need to split the PATH 
+    if(!(path = ft_path(envp)))
+            return -1;
     while(1)
     {
         ft_write("\e[1;32mSHELL-$ \e[0m");
@@ -26,15 +30,15 @@ int main(int argc , char *argv[] , char *envp[])
             return 0;
         if (!ft_check_errors(mask, len))
             return 0;
-        if (!ft_split(&list,line, mask,len, ';'))
-            return 0;
         if(!ft_store(&list , line , mask , len))
             return 0;
         free(line);
         line = NULL;
-
         //after storing data in  list  ; time to execute commands
-        
+        ft_exec(&list,path);
+
+
+
         //need to free list
        // ft_free_list(&list);
         list = NULL;
