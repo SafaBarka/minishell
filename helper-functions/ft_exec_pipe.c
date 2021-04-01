@@ -34,6 +34,7 @@ int ft_exec_pipe(t_split *head, char **path)
     int fd[2];
     int fd_in = 0;
     int pid ;
+    char *cmd;
 
     current = head;
     nbr = ft_nbr_pipe(head);
@@ -48,9 +49,14 @@ int ft_exec_pipe(t_split *head, char **path)
             args[i++] = space->str;
             space = space->next;
         }
+        cmd = args[0];
         args[i] = NULL;
-        if(!(args[0] = ft_call_executable(ft_join("/",args[0]),path)))
-            return 0;
+        if(ft_strncmp(args[0], "echo",5) != 0 && ft_strncmp(args[0], "cd",3) != 0 
+        && ft_strncmp(args[0], "pwd",4) != 0 && ft_strncmp(args[0],"export",7) != 0 && 
+        ft_strncmp(args[0],"unset",6) != 0 && ft_strncmp(args[0], "env",4) != 0 
+        && ft_strncmp(args[0], "exit",5) != 0)
+            if (!(args[0] = ft_call_executable(ft_join("/",args[0]),path)))
+                    return 0;
         
         //pipe execution
         if(nbr != 0)
@@ -58,7 +64,7 @@ int ft_exec_pipe(t_split *head, char **path)
         pid = fork();
         if(pid == 0)
         {
-            dup2(fd_in, 0);
+            dup2(fd_in, STDIN_FILENO);
             if(current->next != NULL)
                 dup2(fd[1],1);
             close(fd[0]);
