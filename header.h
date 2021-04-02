@@ -15,6 +15,11 @@ typedef struct s_split {
     struct s_split *next;
 } t_split;
 
+typedef struct s_list{
+    void            *content;
+    struct s_list	*next;
+}               t_list;
+t_list *export;
 t_split *list;
 
 void ft_write(char *s);
@@ -39,3 +44,11 @@ char			**ft_split_path(char *s, char c);
 //int ft_call(char **args)
 int ft_exec_no_pipe(t_split *pi, char **path);
 int ft_nbr_args(t_split *split);
+
+
+/* ssghuri */
+
+char	*ft_s(char *s, unsigned int start, size_t len);
+void ft_add_export(char **p, int cw, int i);
+void	ft_add_list_envp(char **envp);
+void ft_deletelstsize(t_list *lst);

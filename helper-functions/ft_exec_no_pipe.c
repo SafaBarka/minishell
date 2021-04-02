@@ -2,12 +2,19 @@
 int ft_call(char **args)
 {
      int i = 0;
-     while (args[i])
-         i++;
-     int id = fork();
-     if (id == 0)
-        execve(args[0],args,NULL);
-    wait(NULL);
+    // while (args[i])
+       //  printf("|%s|\n",args[i++]);
+    while (args[i])
+        i++;
+    if(ft_strncmp(args[0],"export",7) == 0)
+    {
+        
+       ft_add_export(args,i,0);
+    }
+    // int id = fork();
+    // if (id == 0)
+     //   execve(args[0],args,NULL);
+   // wait(NULL);
 return 1;
  }
 int ft_exec_no_pipe(t_split *pi, char **path)

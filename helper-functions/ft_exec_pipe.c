@@ -61,7 +61,15 @@ int ft_exec_pipe(t_split *head, char **path)
         //pipe execution
         if(nbr != 0)
             pipe(fd);
-        pid = fork();
+        if ( ft_strncmp(args[0],"export",7) == 0)
+        {
+            if(current->next != NULL)
+                dup2(fd[1],1);
+            ft_add_export(args, i , 0);
+            pid = -1;
+        }
+        else
+            pid = fork();
         if(pid == 0)
         {
             dup2(fd_in, STDIN_FILENO);
@@ -71,7 +79,9 @@ int ft_exec_pipe(t_split *head, char **path)
             execve(args[0],args,NULL);
         }
         close(fd[1]);
-        fd_in = fd[0];
+        fd_in = fd[0];   
+        
+    
 
         //free the double pointer
         int k = 0;
@@ -80,11 +90,11 @@ int ft_exec_pipe(t_split *head, char **path)
 
         current = current->next;   
         nbr--;
+    
     }
-
     nbr = ft_nbr_pipe(head) + 1;
     int j = -1;
-    while (++j < nbr)
+   while (++j < nbr)
         wait(NULL);
         
     return 1;

@@ -12,7 +12,7 @@ int main(int argc , char *argv[] , char *envp[])
     ft_write("\e[1;31m         SHELL         \e[0m\n");
     ft_write("\e[1;31m***********************\e[0m\n\n\n"); 
 
-
+    ft_add_list_envp(envp);
     line = NULL;
     // need to split the PATH 
     if(!(path = ft_path(envp)))
@@ -34,6 +34,7 @@ int main(int argc , char *argv[] , char *envp[])
             return 0;
         free(line);
         line = NULL;
+        //ft_print(list);
         //after storing data in  list  ; time to execute commands
         ft_exec(&list,path);
 
