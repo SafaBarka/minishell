@@ -61,26 +61,28 @@ int ft_exec_pipe(t_split *head, char **path)
                     return 0;
         if(nbr != 0)
             pipe(fd);
-        pid = fork();
-        if(pid == 0)
-        {
-            dup2(fd_in, 0);
-            if(current->next != NULL)
-                dup2(fd[1],1);
-            close(fd[0]);
-            execve(args[0],args,NULL);
-        }
+       
+            pid = fork();
+            f++;
+            if(pid == 0)
+            {
+                
+                dup2(fd_in, 0);
+                if(current->next != NULL)
+                    dup2(fd[1],1);
+                close(fd[0]);
+                execve(args[0],args,NULL);
+            } 
         close(fd[1]);
         fd_in = fd[0];
-        if(current->next == NULL)
-            close(fd_in);
+       if(current->next == NULL)
+           close(fd_in);
         current= current->next;
         nbr--;
     }
     nbr = ft_nbr_pipe(head)+1;
     int j = -1;
-    while(++j < nbr)
-        wait(NULL);
-       
+    while(f > 0)
+        {wait(NULL); f--;}
     return 1;
 }
