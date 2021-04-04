@@ -35,6 +35,7 @@ int ft_exec_pipe(t_split *head, char **path)
     int fd_in = 0;
     int pid ;
     char *cmd;
+    int f = 0;
 
     current = head;
     nbr = ft_nbr_pipe(head);
@@ -51,51 +52,35 @@ int ft_exec_pipe(t_split *head, char **path)
         }
         cmd = args[0];
         args[i] = NULL;
+
         if(ft_strncmp(args[0], "echo",5) != 0 && ft_strncmp(args[0], "cd",3) != 0 
         && ft_strncmp(args[0], "pwd",4) != 0 && ft_strncmp(args[0],"export",7) != 0 && 
         ft_strncmp(args[0],"unset",6) != 0 && ft_strncmp(args[0], "env",4) != 0 
         && ft_strncmp(args[0], "exit",5) != 0)
             if (!(args[0] = ft_call_executable(ft_join("/",args[0]),path)))
                     return 0;
-        
-        //pipe execution
         if(nbr != 0)
             pipe(fd);
-        if ( ft_strncmp(args[0],"export",7) == 0)
-        {
-            if(current->next != NULL)
-                dup2(fd[1],1);
-            ft_add_export(args, i , 0);
-            pid = -1;
-        }
-        else
-            pid = fork();
+        pid = fork();
         if(pid == 0)
         {
-            dup2(fd_in, STDIN_FILENO);
+            dup2(fd_in, 0);
             if(current->next != NULL)
                 dup2(fd[1],1);
             close(fd[0]);
             execve(args[0],args,NULL);
         }
         close(fd[1]);
-        fd_in = fd[0];   
-        
-    
-
-        //free the double pointer
-        int k = 0;
-        while (args[k])
-            free(args[k++]);
-
-        current = current->next;   
+        fd_in = fd[0];
+        if(current->next == NULL)
+            close(fd_in);
+        current= current->next;
         nbr--;
-    
     }
-    nbr = ft_nbr_pipe(head) + 1;
+    nbr = ft_nbr_pipe(head)+1;
     int j = -1;
-   while (++j < nbr)
+    while(++j < nbr)
         wait(NULL);
-        
+       
     return 1;
 }

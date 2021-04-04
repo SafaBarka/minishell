@@ -10,11 +10,14 @@ int ft_call(char **args)
     {
         
        ft_add_export(args,i,0);
+    }else
+    {
+         int id = fork();
+    if (id == 0)
+       execve(args[0],args,NULL);
     }
-    // int id = fork();
-    // if (id == 0)
-     //   execve(args[0],args,NULL);
-   // wait(NULL);
+   
+    wait(NULL);
 return 1;
  }
 int ft_exec_no_pipe(t_split *pi, char **path)
