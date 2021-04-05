@@ -36,7 +36,8 @@ int ft_exec_pipe(t_split *head, char **path)
     int pid ;
     char *cmd;
     int f = 0;
-
+    int file[1000];
+    int k = 0;
     current = head;
     nbr = ft_nbr_pipe(head);
     while (nbr >= 0)
@@ -61,24 +62,28 @@ int ft_exec_pipe(t_split *head, char **path)
                     return 0;
         if(nbr != 0)
             pipe(fd);
-       
             pid = fork();
             f++;
             if(pid == 0)
             {
-                
-                dup2(fd_in, 0);
+
+                dup2(fd_in,0);
                 if(current->next != NULL)
                     dup2(fd[1],1);
                 close(fd[0]);
                 execve(args[0],args,NULL);
-            } 
-        close(fd[1]);
-        fd_in = fd[0];
-       if(current->next == NULL)
-           close(fd_in);
-        current= current->next;
-        nbr--;
+            }
+            close(fd[1]);
+            fd_in = fd[0];
+            file[k]= fd_in;
+            k++;
+            current = current->next;
+            nbr--;
+    }
+    while (k >= 0)
+    {
+        close(file[k]);
+        k--;
     }
     nbr = ft_nbr_pipe(head)+1;
     int j = -1;

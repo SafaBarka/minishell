@@ -22,6 +22,7 @@ typedef struct s_list{
 t_list *export;
 t_split *list;
 
+
 void ft_write(char *s);
 char *ft_create_mask(char *line, int len) ;
 char *ft_dollar(char *old_mask, char *line, int len);
