@@ -31,63 +31,62 @@ int ft_exec_pipe(t_split *head, char **path)
     t_split *space;
     char **args;
     int i;
+    nbr = ft_nbr_pipe(head);
     int fd[2];
     int fd_in = 0;
-    int pid ;
-    char *cmd;
+    int pid;
     int f = 0;
-    int file[1000];
+    int files[10];
     int k = 0;
+    int cmd = 0;
     current = head;
-    nbr = ft_nbr_pipe(head);
     while (nbr >= 0)
     {
-        i = 0;
-        space = current->split;
-        if(!(args = malloc(sizeof(char *) * (ft_nbr_args(space) + 1))))
-            return 0;
+         i = 0;
+         space = current->split;
+     
+       if(!(args = malloc(sizeof(char *) * ( ft_nbr_args(space)+ 1))))
+           return 0;
         while(space)
         {
             args[i++] = space->str;
             space = space->next;
         }
-        cmd = args[0];
         args[i] = NULL;
-
-        if(ft_strncmp(args[0], "echo",5) != 0 && ft_strncmp(args[0], "cd",3) != 0 
-        && ft_strncmp(args[0], "pwd",4) != 0 && ft_strncmp(args[0],"export",7) != 0 && 
-        ft_strncmp(args[0],"unset",6) != 0 && ft_strncmp(args[0], "env",4) != 0 
-        && ft_strncmp(args[0], "exit",5) != 0)
-            if (!(args[0] = ft_call_executable(ft_join("/",args[0]),path)))
-                    return 0;
+        args[0] = ft_call_executable(ft_join("/",args[0]),path);
         if(nbr != 0)
             pipe(fd);
-            pid = fork();
-            f++;
-            if(pid == 0)
+        pid = fork();
+        f++;
+        if(pid == 0)
+        {
+            dup2(fd_in, 0);
+            if(current->next != NULL)
             {
-
-                dup2(fd_in,0);
-                if(current->next != NULL)
-                    dup2(fd[1],1);
-                close(fd[0]);
-                execve(args[0],args,NULL);
+                dup2(fd[1],1);
+                close(fd[1]);
             }
-            close(fd[1]);
-            fd_in = fd[0];
-            file[k]= fd_in;
-            k++;
-            current = current->next;
-            nbr--;
+            close(fd[0]);
+            execve(args[0], args,NULL);
+        }
+        cmd++;
+        close(fd[1]);
+        fd_in = fd[0];
+        files[k] = fd_in;
+        k++;
+        nbr--;
+        current = current->next;
     }
     while (k >= 0)
     {
-        close(file[k]);
+        close(files[k]);
         k--;
+
     }
-    nbr = ft_nbr_pipe(head)+1;
-    int j = -1;
     while(f > 0)
-        {wait(NULL); f--;}
+    {
+        wait(NULL);
+        f--;
+    }
     return 1;
 }

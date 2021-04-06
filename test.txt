@@ -1,0 +1,8 @@
+SHELL-$ cat | ls 
+Makefile                get_next_line           helper-functions        minishell               ssghuri
+echo.c                  header.h                main.c                  minishell.dSYM          test.txt
+
+SHELL-$ 
+
+
+
