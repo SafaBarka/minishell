@@ -40,6 +40,8 @@ int ft_exec_pipe(t_split *head, char **path)
     int k = 0;
     int cmd = 0;
     current = head;
+    int out;
+    int in ;
     while (nbr >= 0)
     {
          i = 0;
@@ -53,32 +55,52 @@ int ft_exec_pipe(t_split *head, char **path)
             space = space->next;
         }
         args[i] = NULL;
-        args[0] = ft_call_executable(ft_join("/",args[0]),path);
+        if(ft_strncmp(args[0],"export",7) != 0)
+            args[0] = ft_call_executable(ft_join("/",args[0]),path);
+        
         if(nbr != 0)
             pipe(fd);
-        pid = fork();
-        f++;
-        if(pid == 0)
+        if(ft_strncmp(args[0],"export",7) == 0)
         {
-            dup2(fd_in, 0);
+            out = dup(1);
             if(current->next != NULL)
             {
                 dup2(fd[1],1);
                 close(fd[1]);
             }
-            close(fd[0]);
-            execve(args[0], args,NULL);
+            ft_add_export(args, i, 0);
+            dup2(out,1);
         }
-        cmd++;
+        else{
+            pid = fork();
+            f++;
+            if(pid == 0)
+            {
+                dup2(fd_in, 0);
+                if(current->next != NULL)
+                {
+                    dup2(fd[1],1);
+                    close(fd[1]);
+                }
+                close(fd[0]);
+                execve(args[0], args,NULL);
+             }
+        }
         close(fd[1]);
         fd_in = fd[0];
-        files[k] = fd_in;
-        k++;
+        if(ft_strncmp(args[0],"export",7) != 0)
+        {
+            
+            files[k] = fd_in;
+            k++;
+        }
+       
         nbr--;
         current = current->next;
     }
     while (k >= 0)
     {
+        //printf("|%d|\n",files[k]);
         close(files[k]);
         k--;
 
@@ -88,5 +110,6 @@ int ft_exec_pipe(t_split *head, char **path)
         wait(NULL);
         f--;
     }
+ 
     return 1;
 }
