@@ -88,7 +88,7 @@ int ft_exec_pipe(t_split *head, char **path)
              }
         }
         close(fd[1]);
-        printf("fd[0] = %d\n",fd[0]);
+
         fd_in = fd[0];
         files[k] = fd_in;
             k++;
