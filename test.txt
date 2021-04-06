@@ -1,8 +1,17 @@
-SHELL-$ cat | ls 
-Makefile                get_next_line           helper-functions        minishell               ssghuri
-echo.c                  header.h                main.c                  minishell.dSYM          test.txt
+cat | ls                       => ls result + one enter
+cat |cat|cat|cat|ls            =>ls result + 4 enter
 
-SHELL-$ 
-
+cat | cat | cat | ls | rev | cat -e  => ls result(with rev + cat -e) + 3 enter
 
 
+export |cat -e | cat | export a=b | export | cat -e | rev| cat -e | cat -e 
+
+ls | grep Makefile | cat -e
+
+
+
+export | cat -e | export a=b | export | rev | cat -e | cat -e
+
+cat | cat | cat | ls
+
+cat | ls

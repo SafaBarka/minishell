@@ -36,7 +36,8 @@ int ft_exec_pipe(t_split *head, char **path)
     int fd_in = 0;
     int pid;
     int f = 0;
-    int files[10];
+    int files[100];
+   
     int k = 0;
     int cmd = 0;
     current = head;
@@ -87,22 +88,19 @@ int ft_exec_pipe(t_split *head, char **path)
              }
         }
         close(fd[1]);
+        printf("fd[0] = %d\n",fd[0]);
         fd_in = fd[0];
-        if(ft_strncmp(args[0],"export",7) != 0)
-        {
-            
-            files[k] = fd_in;
+        files[k] = fd_in;
             k++;
-        }
        
         nbr--;
         current = current->next;
     }
-    while (k >= 0)
-    {
-        //printf("|%d|\n",files[k]);
-        close(files[k]);
-        k--;
+     while (k >= 0)
+     {
+        if(files[k] != 0 && files[k] != 1)
+             close(files[k]);
+         k--;
 
     }
     while(f > 0)
