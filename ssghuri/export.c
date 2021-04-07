@@ -465,6 +465,7 @@ void ft_add_export(char **p, int cw, int i)
 
 void ft_sort_env(int j, int cw) 
 { 
+	printf("cw = %d\n",cw);
 	t_list *node;
 
 	node = export;

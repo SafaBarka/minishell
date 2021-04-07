@@ -2,15 +2,21 @@
 int ft_call(char **args)
 {
      int i = 0;
-    // while (args[i])
-       //  printf("|%s|\n",args[i++]);
     while (args[i])
         i++;
     if(ft_strncmp(args[0],"export",7) == 0)
-    {
-        
        ft_add_export(args,i,0);
-    }else
+    else if (ft_strncmp(args[0],"env",4) == 0)
+        ft_sort_env(0,i);
+    else if (ft_strncmp(args[0],"pwd",4) == 0)
+        ft_pwd(0,i);
+    else if (ft_strncmp(args[0],"cd",3) == 0)
+        ft_cd(0,i,args);
+    else if (ft_strncmp(args[0],"unset",6) == 0)
+        ft_unset(0,args,i);
+    else if (ft_strncmp(args[0],"exit",5) == 0)
+        ft_exit(0,i,args);
+    else
     {
          int id = fork();
     if (id == 0)
@@ -39,7 +45,7 @@ int ft_exec_no_pipe(t_split *pi, char **path)
     //cmd = args[0];
    
     args[i] = NULL;
-     if(ft_strncmp(args[0], "echo",5) != 0 && ft_strncmp(args[0], "cd",3) != 0 
+     if( ft_strncmp(args[0], "cd",3) != 0 
         && ft_strncmp(args[0], "pwd",4) != 0 && ft_strncmp(args[0],"export",7) != 0 && 
         ft_strncmp(args[0],"unset",6) != 0 && ft_strncmp(args[0], "env",4) != 0 
         && ft_strncmp(args[0], "exit",5) != 0)

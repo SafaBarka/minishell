@@ -53,3 +53,9 @@ char	*ft_s(char *s, unsigned int start, size_t len);
 void ft_add_export(char **p, int cw, int i);
 void	ft_add_list_envp(char **envp);
 void ft_deletelstsize(t_list *lst);
+void ft_sort_env(int j, int cw) ;
+void	ft_pwd(int l, int cw);
+void	ft_cd(int m, int cw, char **p);
+
+void ft_unset(int k, char **p, int cw);
+void	ft_exit(int n, int cw ,char **p);

@@ -41,7 +41,7 @@ int main(int argc , char *argv[] , char *envp[])
 
 
         //need to free list
-       // ft_free_list(&list);
+       //ft_free_list(&list);
         list = NULL;
     }
 }

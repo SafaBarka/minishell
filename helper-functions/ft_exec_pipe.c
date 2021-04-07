@@ -36,10 +36,11 @@ int ft_exec_pipe(t_split *head, char **path)
     int fd_in = 0;
     int pid;
     int f = 0;
-    int files[100];
+    int files[10000];
    
     int k = 0;
     int cmd = 0;
+    int fd_old;
     current = head;
     int out;
     int in ;
@@ -56,7 +57,11 @@ int ft_exec_pipe(t_split *head, char **path)
             space = space->next;
         }
         args[i] = NULL;
-        if(ft_strncmp(args[0],"export",7) != 0)
+        if(ft_strncmp(args[0],"export",7) != 0 && ft_strncmp(args[0],"env",4) != 0 &&
+        ft_strncmp(args[0],"pwd",4) != 0 && ft_strncmp(args[0],"cd",3) != 0 &&
+        ft_strncmp(args[0] ,"unset",6) != 0 &&
+        ft_strncmp(args[0],"exit",5) != 0
+        )
             args[0] = ft_call_executable(ft_join("/",args[0]),path);
         
         if(nbr != 0)
@@ -70,6 +75,56 @@ int ft_exec_pipe(t_split *head, char **path)
                 close(fd[1]);
             }
             ft_add_export(args, i, 0);
+            dup2(out,1);
+        }else if(ft_strncmp(args[0],"env",4) == 0)
+        {   
+            out = dup(1);
+            if(current->next != NULL)
+            {
+                dup2(fd[1],1);
+                close(fd[1]);
+            }
+            ft_sort_env(0, i);
+            dup2(out,1);
+        }else if(ft_strncmp(args[0],"pwd",4) == 0)
+        {
+             out = dup(1);
+            if(current->next != NULL)
+            {
+                dup2(fd[1],1);
+                close(fd[1]);
+            }
+            ft_pwd(0, i);
+            dup2(out,1);
+        }else if (ft_strncmp(args[0],"cd",3) == 0)
+        {
+                out = dup(1);
+            if(current->next != NULL)
+            {
+                dup2(fd[1],1);
+                close(fd[1]);
+            }
+            ft_cd(0,i,args);
+            dup2(out,1);
+        }else if (ft_strncmp(args[0],"unset",6) == 0)
+        {
+            out = dup(1);
+            if(current->next != NULL)
+            {
+                dup2(fd[1],1);
+                close(fd[1]);
+            }
+            ft_unset(0,args,i);
+            dup2(out,1);
+        }else if (ft_strncmp(args[0],"exit",5) == 0)
+        {
+            out = dup(1);
+            if(current->next != NULL)
+            {
+                dup2(fd[1],1);
+                close(fd[1]);
+            }
+            ft_exit(0,i,args);
             dup2(out,1);
         }
         else{
@@ -88,21 +143,24 @@ int ft_exec_pipe(t_split *head, char **path)
              }
         }
         close(fd[1]);
-
+        fd_old = fd_in;
+        if (fd_old != 0 && fd_old !=1)
+            close(fd_old);
         fd_in = fd[0];
+        
         files[k] = fd_in;
             k++;
        
         nbr--;
         current = current->next;
     }
-     while (k >= 0)
-     {
-        if(files[k] != 0 && files[k] != 1)
-             close(files[k]);
-         k--;
+    //  while (k >= 0)
+    //  {
+    //     if(files[k] != 0 && files[k] != 1)
+    //          close(files[k]);
+    //      k--;
 
-    }
+    // }
     while(f > 0)
     {
         wait(NULL);
