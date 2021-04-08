@@ -5,7 +5,6 @@ void ft_exec(t_split **v, char **path)
     t_split *semic;
     t_split *pipe;
     int i;
-  //  ft_print(*v);
     semic = *v;
     while (semic)
     {

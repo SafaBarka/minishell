@@ -390,6 +390,7 @@ int ft_find_env(char *s)
 	return(0);
 }
 
+
 void ft_add_export(char **p, int cw, int i)
 {
 	//int cw = 0;
