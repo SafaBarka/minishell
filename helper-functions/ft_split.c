@@ -44,6 +44,9 @@ int ft_split(t_split **list,char *str , char *mask , int len ,char c)
                 return 0;
             if(!(m = ft_sub(mask, start, (end - 1) - start + 1)))
                 return 0;
+            //remove backslash and double quote if it'is not printable
+            if(c == 'S')
+               ft_remove_bq(&s,&m);
             ft_store_list(list,ft_strtrim(s, " "), ft_strtrim(m,"S"), c, len);   
             i++;
         }

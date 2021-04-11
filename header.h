@@ -59,3 +59,4 @@ void	ft_cd(int m, int cw, char **p);
 
 void ft_unset(int k, char **p, int cw);
 void	ft_exit(int n, int cw ,char **p);
+char *ft_remove_bq(char **s, char **m);

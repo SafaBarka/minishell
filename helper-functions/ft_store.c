@@ -21,6 +21,5 @@ int ft_store(t_split **head, char *line, char *mask , int len)
             }
             semicolon = semicolon->next;
         }
-       // ft_print(*head);
         return 1;
 }

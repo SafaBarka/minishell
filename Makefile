@@ -24,6 +24,7 @@ $(NAME):
 		helper-functions/ft_strncmp.c\
 		helper-functions/ft_exec_no_pipe.c\
 		ssghuri/export.c\
+		helper-functions/ft_remove_bq.c\
 		-g -D BUFFER_SIZE=60 -o $(NAME) 
 
 all : $(NAME)
