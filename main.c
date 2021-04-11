@@ -34,11 +34,12 @@ int main(int argc , char *argv[] , char *envp[])
             return 0;
         free(line);
         line = NULL;
-        ft_print(list);
+        
         //after storing data in  list  ; time to execute commands
-        //ft_exec(&list,path);
-
+        ft_exec(&list,path);
+       // printf("a = %s\n",getenv("a"));
        //ft_free_list(&list);
+       //ft_print(list);
         list = NULL;
     }
 }

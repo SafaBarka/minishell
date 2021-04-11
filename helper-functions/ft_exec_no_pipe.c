@@ -30,6 +30,7 @@ int ft_exec_no_pipe(t_split *pi, char **path)
 {
     t_split *space; 
     char **args;
+    char **masks;
     int i ;
     char *cmd;
 
@@ -39,11 +40,9 @@ int ft_exec_no_pipe(t_split *pi, char **path)
     while(space)
     {
         args[i++] = space->str;
+        ft_replace_dollar(&space->str, &space->mask);
         space = space->next;
     }
-
-    //cmd = args[0];
-   
     args[i] = NULL;
      if( ft_strncmp(args[0], "cd",3) != 0 
         && ft_strncmp(args[0], "pwd",4) != 0 && ft_strncmp(args[0],"export",7) != 0 && 
@@ -51,10 +50,6 @@ int ft_exec_no_pipe(t_split *pi, char **path)
         && ft_strncmp(args[0], "exit",5) != 0)
             if(!(args[0] =ft_call_executable(ft_join("/",args[0]),path)))
                 return 0;
-    // if(ft_strncmp("echo",cmd,5) == 0)
-    //     printf("|%s|\n",cmd);
-    // else 
-    //     printf("not echo\n");
     ft_call(args);
     return 1;
 }

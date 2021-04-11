@@ -26,7 +26,7 @@ char *ft_dollar(char *old_mask, char *line, int len)
         {
             while (i+1 < len)
             {
-                if (ft_include(no_var, ft_strlen(no_var) , line[i+1]) == 0)
+                if (ft_include(no_var, ft_strlen(no_var) , line[i+1]) == 0 && old_mask[i+1] != '$')
                     old_mask[i+1] ='v';
                 else
                     break;
