@@ -40,6 +40,11 @@ int main(int argc , char *argv[] , char *envp[])
        // printf("a = %s\n",getenv("a"));
        //ft_free_list(&list);
        //ft_print(list);
+       char *args[3];// = {"hello","world",NULL};
+     //  args[0] ="hello";
+     //  args[1] ="world";
+     //  args[2]=NULL;
+      // ft_echo(args);
         list = NULL;
     }
 }

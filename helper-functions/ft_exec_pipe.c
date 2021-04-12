@@ -34,7 +34,8 @@ int ft_args(char **args)
 
 int ft_builtin(char *name)
 {
-     if(ft_strncmp(name,"export",7) != 0 && ft_strncmp(name,"env",4) != 0 &&
+     if(ft_strncmp(name,"export",7) != 0 && ft_strncmp(name,"env",4) != 0 && 
+     ft_strncmp(name,"echo",5) != 0 &&
     ft_strncmp(name,"pwd",4) != 0 && ft_strncmp(name,"cd",3) != 0 &&
     ft_strncmp(name ,"unset",6) != 0 &&
     ft_strncmp(name,"exit",5) != 0)
@@ -55,7 +56,9 @@ char **ft_create_args(t_split *current, char **path)
         return 0;
     while(space)
     {
+        ft_replace_dollar(&space->str, &space->mask);
         args[i++] = space->str;
+        
         space = space->next;
     }
     args[i] = NULL;
@@ -79,6 +82,8 @@ void ft_builtin_cmd(char **args)
         ft_unset(0,args,ft_args(args));
     else if (ft_strncmp(args[0],"exit",5) == 0)
         ft_exit(0,ft_args(args),args);
+    else if (ft_strncmp(args[0],"echo",5) == 0)
+        ft_echo(args + 1);
 }
 
 

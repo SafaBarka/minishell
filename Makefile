@@ -3,7 +3,7 @@ NAME = minishell
 CFLAGS =  -Wall -Wextra -Werror 
 
 $(NAME):
-		@gcc  -fsanitize=address main.c \
+		@gcc -fsanitize=address main.c \
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c\
 		helper-functions/ft_write.c\
@@ -26,6 +26,7 @@ $(NAME):
 		ssghuri/export.c\
 		helper-functions/ft_replace_dollar.c\
 		helper-functions/ft_remove_bq.c\
+		helper-functions/ft_echo.c\
 		-g -D BUFFER_SIZE=60 -o $(NAME) 
 
 all : $(NAME)

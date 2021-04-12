@@ -62,3 +62,8 @@ void	ft_exit(int n, int cw ,char **p);
 char *ft_remove_bq(char **s, char **m);
 void ft_replace_dollar(char **command, char **mask);
 char	*ft_su(char  *s, unsigned int start, size_t len);
+char	*ft_strchr(const char *s, int c);
+int	ft_position(const char *s, int c);
+int		ft_strcmp(const char *s1, const char *s2);
+char    *ft_value(char *s);
+void ft_echo(char **args);

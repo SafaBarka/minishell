@@ -16,6 +16,8 @@ int ft_call(char **args)
         ft_unset(0,args,i);
     else if (ft_strncmp(args[0],"exit",5) == 0)
         ft_exit(0,i,args);
+    else if (ft_strncmp(args[0],"echo",5) == 0)
+        ft_echo(args +1);
     else
     {
          int id = fork();
@@ -39,12 +41,12 @@ int ft_exec_no_pipe(t_split *pi, char **path)
     args = malloc(sizeof(char *) * (ft_nbr_args(space) + 1));
     while(space)
     {
-        args[i++] = space->str;
         ft_replace_dollar(&space->str, &space->mask);
+        args[i++] = space->str;
         space = space->next;
     }
     args[i] = NULL;
-     if( ft_strncmp(args[0], "cd",3) != 0 
+     if( ft_strncmp(args[0], "cd",3) != 0 && ft_strncmp(args[0], "echo",5) != 0 
         && ft_strncmp(args[0], "pwd",4) != 0 && ft_strncmp(args[0],"export",7) != 0 && 
         ft_strncmp(args[0],"unset",6) != 0 && ft_strncmp(args[0], "env",4) != 0 
         && ft_strncmp(args[0], "exit",5) != 0)
