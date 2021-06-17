@@ -1,50 +1,74 @@
 #include "header.h"
 
 int main(int argc , char *argv[] , char *envp[])
-{
-    char *line;
-    int len ;
-    char *mask;
-    list = NULL;
-    t_split *list;
-    char **path;
-    ft_write("\e[1;31m***********************\e[0m\n");
-    ft_write("\e[1;31m         SHELL         \e[0m\n");
-    ft_write("\e[1;31m***********************\e[0m\n\n\n"); 
+{ 
+    //char *line;
+    int c;
+	int col;
+	char *s = NULL;
+    char *line = NULL;
 
     ft_add_list_envp(envp);
-    line = NULL;
-    // need to split the PATH 
-    if(!(path = ft_path(envp)))
-            return -1;
-    while(1)
+    sh.path =  ft_path();
+    //ft_to_tab(export);
+    //sh.envp = array_export();
+    
+    //--to delete--
+    if (argc == 3)
     {
-        ft_write("\e[1;32mSHELL-$ \e[0m");
-        if (get_next_line(0, &line) == -1)
-            return 0;
-        len = ft_strlen(line);
-        if (len == 0)
-            continue;
-        //create the mask for line
-        if(!(mask = ft_create_mask(line, len)))
-            return 0;
-        if (!ft_check_errors(mask, len))
-            return 0;
-        if(!ft_store(&list , line , mask , len))
-            return 0;
-        free(line);
-        line = NULL;
-        
-        //after storing data in  list  ; time to execute commands
-        ft_exec(&list,path);
-       // printf("a = %s\n",getenv("a"));
-       //ft_free_list(&list);
-       //ft_print(list);
-       char *args[3];// = {"hello","world",NULL};
-     //  args[0] ="hello";
-     //  args[1] ="world";
-     //  args[2]=NULL;
-      // ft_echo(args);
-        list = NULL;
+        tab = argv[2];
+        line = ft_strdup(tab);
+        ft_parse_line(line);
+            return ret;  
+    }
+    //----------------
+
+    else
+    {
+        signal(SIGINT, handle_sigint);
+        signal(SIGQUIT, handle_sigquit);
+        ft_write("\e[1;31m***********************\e[0m\n");
+        ft_write("\e[1;31m         SHELL         \e[0m\n");
+        ft_write("\e[1;31m***********************\e[0m\n\n\n");
+        while(1)
+        {
+            c = 0;
+            ft_write("\e[1;32mSHELL-$ \e[0m");
+            ft_init_hist();
+            col = 0;
+            v_fork = 0;
+          
+            while(read(STDIN_FILENO,&c, sizeof(c)) > 0)
+            {
+                if (c == BACKSPACE) 
+                    delete_end(&col);
+          
+                else if(c == ENTER_ARROW)
+                {
+                    
+                    ft_enter_arrow();
+                    line = ft_strdup(tab);
+                    //printf("line = |%p|\n",line);
+                    ft_parse_line(line);
+                    //free(line);
+                   // if(tab[0] == '\0')
+                     //   free(tab);
+                    break;
+                }
+                else if (c == UP_ARROW)
+                    ft_up_arrow(&col);
+                else if (c == DOWN_ARROW)
+                    ft_down_arrow(&col);
+                else if (c == 4)
+                   ft_ctrld();
+                else
+                {
+                    ft_remplir_tab(s, &col, c); 
+                }
+                c = 0;
+            }
+           // printf("tab = |%p|\n",tab);
+            free(tab);
+        }
     }
 }
